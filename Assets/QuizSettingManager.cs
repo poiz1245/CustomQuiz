@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +21,8 @@ public class QuizSettingManager : MonoBehaviour
 
     [SerializeField] GameObject threeChoiceSettingPanel;
     [SerializeField] GameObject fourChoiceSettingPanel;
-    [SerializeField] Transform threeChoiceParentObj;
-    [SerializeField] Transform fourChoiceParentObj;
 
+    [SerializeField] Transform[] parentObj;
 
     private void Awake()
     {
@@ -48,14 +48,18 @@ public class QuizSettingManager : MonoBehaviour
         string optionName = questionDropdown.options[questionDropdown.value].text;
         int numberOfQuestion = Int32.Parse(optionName);
 
-        foreach(Transform child in threeChoiceParentObj)
+        Array.ForEach(parentObj, parentObj =>
         {
-            Destroy (child.gameObject);
-        }
+            foreach (Transform child in parentObj)
+            {
+                Destroy(child.gameObject);
+            }
+        });
 
-        for(int i = 0; i < numberOfQuestion; i++)
+        for (int i = 0; i < numberOfQuestion; i++)
         {
-            Instantiate(threeChoiceSettingPanel, threeChoiceParentObj);
+            Instantiate(threeChoiceSettingPanel, parentObj[0]);
+            Instantiate(fourChoiceSettingPanel, parentObj[1]);
         }
 
     }
@@ -81,6 +85,8 @@ public class QuizSettingManager : MonoBehaviour
             initPanel.SetActive(true);
             threeChoicePanel.SetActive(false) ;
             fourChoicePanel.SetActive(false);
+
+            
         }
     }
 }

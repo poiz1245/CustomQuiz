@@ -425,8 +425,9 @@ MonoBehaviour:
   initPanel: {fileID: 640907784}
   threeChoiceSettingPanel: {fileID: 3573734745174504610, guid: a02640b45dbfb3342ae4d383eaf922e6, type: 3}
   fourChoiceSettingPanel: {fileID: 5133738737778155517, guid: 91b575480c3e53b4cb46ca21fed8392c, type: 3}
-  threeChoiceParentObj: {fileID: 338932740}
-  fourChoiceParentObj: {fileID: 40091438}
+  parentObj:
+  - {fileID: 338932740}
+  - {fileID: 40091438}
 --- !u!4 &81486985
 Transform:
   m_ObjectHideFlags: 0
