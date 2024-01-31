@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -13,9 +14,14 @@ public class QuizSettingManager : MonoBehaviour
     [SerializeField] TMP_Dropdown questionDropdown;
     [SerializeField] TMP_Dropdown choiceDropdown;
 
-    [SerializeField] GameObject parentObj;
-    [SerializeField] GameObject quizSettingPanel;
-    [SerializeField] GameObject ChoiceObj;
+    [SerializeField] GameObject threeChoicePanel;
+    [SerializeField] GameObject fourChoicePanel;
+    [SerializeField] GameObject initPanel;
+
+    [SerializeField] GameObject threeChoiceSettingPanel;
+    [SerializeField] GameObject fourChoiceSettingPanel;
+    [SerializeField] Transform threeChoiceParentObj;
+    [SerializeField] Transform fourChoiceParentObj;
 
 
     private void Awake()
@@ -40,19 +46,18 @@ public class QuizSettingManager : MonoBehaviour
     void SetNumberOfQuestion(TMP_Dropdown questionDropdown)
     {
         string optionName = questionDropdown.options[questionDropdown.value].text;
+        int numberOfQuestion = Int32.Parse(optionName);
 
-        if (optionName == "10")
+        foreach(Transform child in threeChoiceParentObj)
         {
-            print("10");
+            Destroy (child.gameObject);
         }
-        else if (optionName == "20")
+
+        for(int i = 0; i < numberOfQuestion; i++)
         {
-            print("20");
+            Instantiate(threeChoiceSettingPanel, threeChoiceParentObj);
         }
-        else if (optionName == "30")
-        {
-            print("30");
-        }
+
     }
 
     void SetNumberOfChoice(TMP_Dropdown choiceDropdown)
@@ -61,11 +66,21 @@ public class QuizSettingManager : MonoBehaviour
 
         if (optionName == "3")
         {
-            print("3");
+            initPanel.SetActive(false);
+            threeChoicePanel.SetActive(true);
+            fourChoicePanel.SetActive(false);
         }
         else if (optionName == "4")
         {
-            print("4");
+            initPanel.SetActive(false);
+            threeChoicePanel.SetActive(false);
+            fourChoicePanel.SetActive(true);
+        }
+        else if( optionName == "select")
+        {
+            initPanel.SetActive(true);
+            threeChoicePanel.SetActive(false) ;
+            fourChoicePanel.SetActive(false);
         }
     }
 }
